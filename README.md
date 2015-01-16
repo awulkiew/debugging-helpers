@@ -20,15 +20,8 @@ Currently supported:
 * Boost.Variant
   * boost::variant
 
-Additional information:
-http://doc.qt.io/qtcreator/creator-debugging-helpers.html
+To use, in **~/.gdbinit** or **QtCreator > Tools > Options > Debugger > GDB > Additional Startup Commands** put
 
-In
-    ~/.gdbinit
-or
-    Tools > Options > Debugger > GDB > Additional Startup Commands
-put
     python execfile('path_to_filename.py')
-e.g.
-    python execfile('/home/john/dh-boost-geometry.py')
 
+Additional information: http://doc.qt.io/qtcreator/creator-debugging-helpers.html
