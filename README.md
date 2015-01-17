@@ -24,4 +24,10 @@ To use, in **~/.gdbinit** or **QtCreator > Tools > Options > Debugger > GDB > Ad
 
     python execfile('path_to_filename.py')
 
+if GDB was linked against python 2 or
+
+    python exec(open('path_to_filename.py').read())
+
+if GDB was linked against python 3.
+
 Additional information: http://doc.qt.io/qtcreator/creator-debugging-helpers.html
