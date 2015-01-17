@@ -67,8 +67,10 @@ def qdump__boost__geometry__model__segment(d, value):
 
 
 def boost__geometry__dump_derived_from_vector(d, value, container_tparam_id):
-    Cont_str = d.extractTemplateArgument(str(value.type), container_tparam_id)
-    if Cont_str.find("std::vector") != -1:
+    Cont_str = str(value.type)
+    if container_tparam_id >= 0:
+        Cont_str = d.extractTemplateArgument(str(value.type), container_tparam_id)
+    if Cont_str.startswith("std::vector") != -1:
         qdump__std__vector(d, value)
     else:
         d.putPlainChildren(value)
@@ -97,8 +99,8 @@ def qdump__boost__geometry__model__polygon(d, value):
             outer = value["m_outer"]
             inners = value["m_inners"]
             with SubItem(d, "external"):
-                d.putItem(outer)
+                boost__geometry__dump_derived_from_vector(d, outer, 3)
                 d.putBetterType(str(d.templateArgument(inners.type, 0)))
             with SubItem(d, "internal"):
-                d.putItem(inners)
+                boost__geometry__dump_derived_from_vector(d, inners, -1)
                 d.putBetterType("RingList")
