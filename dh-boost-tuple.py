@@ -9,12 +9,9 @@
 def boost__tuple__put_children(d, value, current, i, count):
     if i < count:
         val = current["head"]
-        name = "<%s>" % i;
-        d.putSubItem(name, val)
-        with SubItem(d, name):
+        with SubItem(d, "<%s>" % i):
             d.putItem(val)
             d.putBetterType(str(d.templateArgument(value.type, i)))
-
         next_i = i + 1
         if next_i < count:
             boost__tuple__put_children(d, value, current["tail"], next_i, count)
@@ -26,8 +23,8 @@ def qdump__boost__tuples__tuple(d, value):
        if str(type) == "boost::tuples::null_type":
            break
        count = count + 1
-    d.putValue("<length: %s>" % count)
-
+    #d.putValue("<length: %s>" % count)
+    d.putItemCount(count)
     d.putNumChild(count)
     if d.isExpanded():
         with Children(d, count):
