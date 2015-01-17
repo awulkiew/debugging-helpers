@@ -94,5 +94,11 @@ def qdump__boost__geometry__model__polygon(d, value):
     d.putNumChild(2)
     if d.isExpanded():
         with Children(d, 2):
-            d.putSubItem("external", value["m_outer"])
-            d.putSubItem("internal", value["m_inners"])
+            outer = value["m_outer"]
+            inners = value["m_inners"]
+            with SubItem(d, "external"):
+                d.putItem(outer)
+                d.putBetterType(str(d.templateArgument(inners.type, 0)))
+            with SubItem(d, "internal"):
+                d.putItem(inners)
+                d.putBetterType("RingList")
