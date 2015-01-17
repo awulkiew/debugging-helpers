@@ -90,7 +90,7 @@ def qdump__boost__geometry__model__multi_polygon(d, value):
 
 
 def qdump__boost__geometry__model__polygon(d, value):
-    d.putValue("...")
+    d.putValue("@0x%x" % value.address)
     d.putNumChild(2)
     if d.isExpanded():
         with Children(d, 2):
