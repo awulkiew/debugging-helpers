@@ -90,10 +90,9 @@ def qdump__boost__geometry__model__multi_polygon(d, value):
 
 
 def qdump__boost__geometry__model__polygon(d, value):
-    outer = value["m_outer"]
-    inners = value["m_inners"]
+    d.putValue("...")
     d.putNumChild(2)
     if d.isExpanded():
         with Children(d, 2):
-            d.putSubItem("external", outer)
-            d.putSubItem("internal", inners)
+            d.putSubItem("external", value["m_outer"])
+            d.putSubItem("internal", value["m_inners"])
