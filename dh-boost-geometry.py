@@ -168,3 +168,38 @@ def qdump__boost__geometry__segment_ratio(d, value):
             d.putSubItem("m_numerator", numerator)
             d.putSubItem("m_denominator", denominator)
             d.putSubItem("m_approximation", approximation)
+
+#################################################################
+# algorithms
+#################################################################
+
+def qdump__boost__geometry__segment_identifier(d, value):
+    source_index = value["source_index"]
+    multi_index = value["multi_index"]
+    ring_index = value["ring_index"]
+    segment_index = value["segment_index"]
+    d.putValue("{%s, %s, %s, %s}" % (source_index, multi_index, ring_index, segment_index))
+    d.putNumChild(4)
+    if d.isExpanded():
+        with Children(d, 4):
+            d.putSubItem("source_index", source_index)
+            d.putSubItem("multi_index", multi_index)
+            d.putSubItem("ring_index", ring_index)
+            d.putSubItem("segment_index", segment_index)
+
+def qdump__boost__geometry__detail__overlay__turn_operation(d, value):
+    operation = value["operation"]
+    seg_id = value["seg_id"]
+    fraction = value["fraction"]
+    simple_op = str(operation)
+    simple_op = simple_op[simple_op.rfind("::")+2:]
+    d.putValue(simple_op)
+    d.putNumChild(3)
+    if d.isExpanded():
+        with Children(d, 3):
+            with SubItem(d, "operation"):
+                d.putValue(simple_op)
+                d.putType(operation.type)
+                d.putNumChild(0)
+            d.putSubItem("seg_id", seg_id)
+            d.putSubItem("fraction", fraction)

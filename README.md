@@ -5,6 +5,7 @@
 Currently supported:
 
 * Boost.Geometry
+  * boost::geometry::detail::overlay::turn_operation
   * boost::geometry::index::detail::rtree::variant_internal_node
   * boost::geometry::index::detail::rtree::variant_leaf
   * boost::geometry::index::detail::varray
@@ -20,7 +21,9 @@ Currently supported:
   * boost::geometry::model::referring_segment
   * boost::geometry::model::ring
   * boost::geometry::model::segment
+  * boost::geometry::segment_identifier
   * boost::geometry::segment_ratio
+
 * Boost.Rational
   * boost::rational
 * Boost.Tuple

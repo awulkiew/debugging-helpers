@@ -43,8 +43,12 @@ int main()
 
     bg::model::referring_segment<point_t> ref_segment(point, point);
 
-    bg::segment_ratio<long long> sratio1;
-    bg::segment_ratio<long long> sratio2(5, 6);
+    bg::segment_ratio<int> sratio1;
+    bg::segment_ratio<int> sratio2(5, 6);
+
+    bg::segment_identifier seg_id(0, -1, 0, 1);
+
+    bg::detail::overlay::turn_operation< bg::segment_ratio<int> > turn_op;
 
     bgi::detail::varray<point_t, 10> varray(5, point);
 
