@@ -27,19 +27,23 @@ def qdump__boost__geometry__model__point(d, value):
     size = d.numericTemplateArgument(value.type, 1)
     array = value["m_values"]
     d.putValue(boost__geometry__point_array_to_text(array, size))
+    d.putNumChild(size)
     if d.isExpanded():
-        CT = d.templateArgument(value.type, 0)
-        d.putArrayData(CT, d.addressOf(array), size)
+        with Children(d, size):
+            for i in range(0, int(size)):
+                d.putSubItem("<%s>"%i, array[i])
 
 def qdump__boost__geometry__model__d2__point_xy(d, value):
     array = value["m_values"]
     d.putValue(boost__geometry__point_array_to_text(array, 2))
+    d.putNumChild(2)
     if d.isExpanded():
-        CT = d.templateArgument(value.type, 0)
-        d.putArrayData(CT, d.addressOf(array), 2)
+        with Children(d, 2):
+            d.putSubItem("<0>", array[0])
+            d.putSubItem("<1>", array[1])
 
 
-def boost__geometry__dump_indexed(d, value, i0, i1):
+def boost__geometry__dump_indexed(d, value, i0, i1, n0, n1):
     P = d.templateArgument(value.type, 0)
 
     # the following lines could probably be replaced by something better
@@ -56,21 +60,23 @@ def boost__geometry__dump_indexed(d, value, i0, i1):
         val = '{' + boost__geometry__point_array_to_text(min_array, Dim) + ", "
         val += boost__geometry__point_array_to_text(max_array, Dim) + '}'
         d.putValue(val);
+    else:
+        d.putValue("@0x%x" % value.address)
 
     d.putNumChild(2)
     if d.isExpanded():
         with Children(d, 2):
-            d.putSubItem("[0]", i0)
-            d.putSubItem("[1]", i1)
+            d.putSubItem("<%s>" % n0, i0)
+            d.putSubItem("<%s>" % n1, i1)
 
 def qdump__boost__geometry__model__box(d, value):
-    boost__geometry__dump_indexed(d, value, value["m_min_corner"], value["m_max_corner"])
+    boost__geometry__dump_indexed(d, value, value["m_min_corner"], value["m_max_corner"], "0: min_corner", "1: max_corner")
 
 def qdump__boost__geometry__model__segment(d, value):
-    boost__geometry__dump_indexed(d, value, value["first"], value["second"])
+    boost__geometry__dump_indexed(d, value, value["first"], value["second"], "0", "1")
 
 def qdump__boost__geometry__model__referring_segment(d, value):
-    boost__geometry__dump_indexed(d, value, value["first"], value["second"])
+    boost__geometry__dump_indexed(d, value, value["first"], value["second"], "0", "1")
 
 
 def boost__geometry__dump_derived_from_vector(d, value, container_tparam_id):
