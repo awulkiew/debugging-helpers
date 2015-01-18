@@ -30,12 +30,12 @@ Currently supported:
 
 To use, in **~/.gdbinit** or **QtCreator > Tools > Options > Debugger > GDB > Additional Startup Commands** put
 
-    python execfile('path_to_filename.py')
-
-if GDB was linked against python 2 or
-
     python exec(open('path_to_filename.py').read())
 
-if GDB was linked against python 3.
+if GDB was linked against python 3 or
+
+    python execfile('path_to_filename.py')
+
+if GDB was linked against python 2.
 
 Additional information: http://doc.qt.io/qtcreator/creator-debugging-helpers.html
