@@ -15,6 +15,9 @@ Currently supported:
   * boost::geometry::model::polygon
   * boost::geometry::model::ring
   * boost::geometry::model::segment
+  * boost::geometry::segment_ratio
+* Boost.Rational
+  * boost::rational
 * Boost.Tuple
   * boost::tuple
 * Boost.Variant
