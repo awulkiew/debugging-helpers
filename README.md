@@ -16,6 +16,10 @@ Currently supported:
   * boost::geometry::model::ring
   * boost::geometry::model::segment
   * boost::geometry::segment_ratio
+  * boost::geometry::index::rtree
+  * boost::geometry::index::detail::varray
+  * boost::geometry::index::detail::rtree::variant_internal_node
+  * boost::geometry::index::detail::rtree::variant_leaf
 * Boost.Rational
   * boost::rational
 * Boost.Tuple
