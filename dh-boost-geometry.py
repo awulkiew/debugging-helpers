@@ -110,6 +110,35 @@ def qdump__boost__geometry__model__polygon(d, value):
                 d.putBetterType("RingList")
 
 #################################################################
+# index
+#################################################################
+
+def qdump__boost__geometry__index__detail__varray(d, value):
+    size = value["m_size"]
+    storage = value["m_storage"]["data_"]["buf"]
+    T = d.templateArgument(value.type, 0)
+    d.putItemCount(size)
+    d.putNumChild(1)
+    if d.isExpanded():
+        d.putArrayData(T, storage.cast(T.pointer()), size)
+
+def qdump__boost__geometry__index__rtree(d, value):
+    members = value["m_members"]
+    size = members["values_count"]
+    d.putItemCount(size)
+    d.putNumChild(2)
+    if d.isExpanded():
+        with Children(d, 2):
+            d.putSubItem("m_members", members)
+            d.putSubItem("root", members["root"])
+
+def qdump__boost__geometry__index__detail__rtree__variant_internal_node(d, value):
+    d.putItem(value["elements"])
+
+def qdump__boost__geometry__index__detail__rtree__variant_leaf(d, value):
+    d.putItem(value["elements"])
+
+#################################################################
 # policies
 #################################################################
 
