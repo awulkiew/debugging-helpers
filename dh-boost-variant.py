@@ -16,7 +16,7 @@ def qdump__boost__variant(d, value):
 
     type_name = type_name[:type_name.find('<')]
     type_name = type_name[type_name.rfind("::")+2:]
-    d.putValue("<%s - %s>" % (which, type_name))
+    d.putValue("<%s: %s>" % (which, type_name))
 
     d.putNumChild(1)
     if d.isExpanded():
