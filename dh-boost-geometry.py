@@ -6,6 +6,10 @@
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
+#################################################################
+# geometries
+#################################################################
+
 def boost__geometry__point_array_to_text(array, size):
     res = '{'
     if size > 0:
@@ -104,3 +108,25 @@ def qdump__boost__geometry__model__polygon(d, value):
             with SubItem(d, "internal"):
                 boost__geometry__dump_derived_from_vector(d, inners, -1)
                 d.putBetterType("RingList")
+
+#################################################################
+# policies
+#################################################################
+
+def qdump__boost__geometry__segment_ratio(d, value):
+    numerator = value["m_numerator"]
+    denominator = value["m_denominator"]
+    approximation = value["m_approximation"]
+    if denominator == 0:
+        d.putValue("%s/%s" % (numerator, denominator))
+    elif numerator == 0:
+        d.putValue(0)
+    else:
+        approx = approximation / 1000000.0
+        d.putValue("%s/%s (%s)" % (numerator, denominator, approx))
+    d.putNumChild(3)
+    if d.isExpanded():
+        with Children(d, 3):
+            d.putSubItem("m_numerator", numerator)
+            d.putSubItem("m_denominator", denominator)
+            d.putSubItem("m_approximation", approximation)
