@@ -41,6 +41,8 @@ int main()
     bg::read_wkt("POLYGON((0 0,0 5,5 0,0 0),(1 1,2 1,1 2,1 1),(3 3,4 3,3 4,3 3))", polygon);
     bg::read_wkt("MULTIPOLYGON(((0 0,0 1,1 0,0 0)),((4 4,4 5,5 4,4 4)))", mpolygon);
 
+    bg::model::referring_segment<point_t> ref_segment(point, point);
+
     bg::segment_ratio<long long> sratio1;
     bg::segment_ratio<long long> sratio2(5, 6);
 

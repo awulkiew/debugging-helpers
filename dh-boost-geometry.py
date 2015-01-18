@@ -69,6 +69,9 @@ def qdump__boost__geometry__model__box(d, value):
 def qdump__boost__geometry__model__segment(d, value):
     boost__geometry__dump_indexed(d, value, value["first"], value["second"])
 
+def qdump__boost__geometry__model__referring_segment(d, value):
+    boost__geometry__dump_indexed(d, value, value["first"], value["second"])
+
 
 def boost__geometry__dump_derived_from_vector(d, value, container_tparam_id):
     Cont_str = str(value.type)
