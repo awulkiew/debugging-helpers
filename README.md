@@ -13,6 +13,7 @@ Currently supported:
   * boost::geometry::model::multi_polygon
   * boost::geometry::model::point
   * boost::geometry::model::polygon
+  * boost::geometry::model::referring_segment
   * boost::geometry::model::ring
   * boost::geometry::model::segment
   * boost::geometry::segment_ratio
