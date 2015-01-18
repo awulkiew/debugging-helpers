@@ -123,7 +123,7 @@ def qdump__boost__geometry__segment_ratio(d, value):
         d.putValue(0)
     else:
         approx = approximation / 1000000.0
-        d.putValue("%s/%s (%s)" % (numerator, denominator, approx))
+        d.putValue("%s/%s ~ %s" % (numerator, denominator, approx))
     d.putNumChild(3)
     if d.isExpanded():
         with Children(d, 3):
