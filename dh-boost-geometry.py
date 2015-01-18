@@ -70,7 +70,7 @@ def boost__geometry__dump_indexed(d, value, i0, i1, n0, n1):
             d.putSubItem("<%s>" % n1, i1)
 
 def qdump__boost__geometry__model__box(d, value):
-    boost__geometry__dump_indexed(d, value, value["m_min_corner"], value["m_max_corner"], "0: min_corner", "1: max_corner")
+    boost__geometry__dump_indexed(d, value, value["m_min_corner"], value["m_max_corner"], "0:min_corner", "1:max_corner")
 
 def qdump__boost__geometry__model__segment(d, value):
     boost__geometry__dump_indexed(d, value, value["first"], value["second"], "0", "1")
