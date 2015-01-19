@@ -4,7 +4,11 @@
 
 Currently supported:
 
+* Boost.Array
+  * boost::array
+
 * Boost.Geometry
+  * boost::geometry::detail::overlay::turn_info
   * boost::geometry::detail::overlay::turn_operation
   * boost::geometry::index::detail::rtree::variant_internal_node
   * boost::geometry::index::detail::rtree::variant_leaf
