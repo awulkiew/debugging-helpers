@@ -1,3 +1,5 @@
+#include <boost/array.hpp>
+
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/index/rtree.hpp>
@@ -49,6 +51,8 @@ int main()
     bg::segment_identifier seg_id(0, -1, 0, 1);
 
     bg::detail::overlay::turn_operation< bg::segment_ratio<int> > turn_op;
+    bg::detail::overlay::turn_info<
+        point_t, bg::segment_ratio<int> > turn_inf;
 
     bgi::detail::varray<point_t, 10> varray(5, point);
 
@@ -58,6 +62,8 @@ int main()
     rtree.insert(point_t(2, 2));
     rtree.insert(point_t(3, 3));
     rtree.insert(point_t(4, 4));
+
+    boost::array<int, 5> arr;
 
     boost::rational<int> r1;
     boost::rational<int> r2(1);

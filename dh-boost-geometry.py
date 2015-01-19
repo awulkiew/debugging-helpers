@@ -42,17 +42,17 @@ def qdump__boost__geometry__model__d2__point_xy(d, value):
             d.putSubItem("<0>", array[0])
             d.putSubItem("<1>", array[1])
 
+def boost__geometry__point_dimension(d, point_type):
+    point_str = str(point_type)
+    if point_str.startswith("boost::geometry::model::point") != -1:
+        return int(d.numericTemplateArgument(point_type, 1))
+    elif point_str.startswith("boost::geometry::model::d2::point_xy") != -1:
+        return 2
+    return 0
 
 def boost__geometry__dump_indexed(d, value, i0, i1, n0, n1):
     P = d.templateArgument(value.type, 0)
-
-    # the following lines could probably be replaced by something better
-    Dim = 0
-    Pstr = str(P)
-    if Pstr.find("boost::geometry::model::point") != -1:
-        Dim = d.numericTemplateArgument(P, 1)
-    elif Pstr.find("boost::geometry::model::d2::point_xy") != -1:
-        Dim = 2
+    Dim = boost__geometry__point_dimension(d, P)
 
     if Dim > 0:
         min_array = i0["m_values"]
@@ -173,26 +173,29 @@ def qdump__boost__geometry__segment_ratio(d, value):
 # algorithms
 #################################################################
 
-def qdump__boost__geometry__segment_identifier(d, value):
+def boost__geometry__segment_identifier_to_str(value):
     source_index = value["source_index"]
     multi_index = value["multi_index"]
     ring_index = value["ring_index"]
     segment_index = value["segment_index"]
-    d.putValue("{%s, %s, %s, %s}" % (source_index, multi_index, ring_index, segment_index))
+    return "{%s, %s, %s, %s}" % (source_index, multi_index, ring_index, segment_index);
+
+def qdump__boost__geometry__segment_identifier(d, value):
+    d.putValue(boost__geometry__segment_identifier_to_str(value))
     d.putNumChild(4)
     if d.isExpanded():
         with Children(d, 4):
-            d.putSubItem("source_index", source_index)
-            d.putSubItem("multi_index", multi_index)
-            d.putSubItem("ring_index", ring_index)
-            d.putSubItem("segment_index", segment_index)
+            d.putSubItem("source_index", value["source_index"])
+            d.putSubItem("multi_index", value["multi_index"])
+            d.putSubItem("ring_index", value["ring_index"])
+            d.putSubItem("segment_index", value["segment_index"])
 
 def qdump__boost__geometry__detail__overlay__turn_operation(d, value):
     operation = value["operation"]
     seg_id = value["seg_id"]
     fraction = value["fraction"]
     simple_op = str(operation)
-    simple_op = simple_op[simple_op.rfind("::")+2:]
+    simple_op = simple_op[simple_op.rfind("_")+1:]
     d.putValue(simple_op)
     d.putNumChild(3)
     if d.isExpanded():
@@ -203,3 +206,30 @@ def qdump__boost__geometry__detail__overlay__turn_operation(d, value):
                 d.putNumChild(0)
             d.putSubItem("seg_id", seg_id)
             d.putSubItem("fraction", fraction)
+
+def qdump__boost__geometry__detail__overlay__turn_info(d, value):
+    point = value["point"]
+    method = value["method"]
+    discarded = value["discarded"]
+    selectable_start = value["selectable_start"]
+    operations = value["operations"]
+    simple_method = str(method)
+    simple_method = simple_method[simple_method.rfind("_")+1:]
+
+    val_str = "%s" % simple_method;
+    dim = boost__geometry__point_dimension(d, point.type)
+    if dim > 0:
+        val_str += " " + boost__geometry__point_array_to_text(point["m_values"], dim)
+    d.putValue(val_str)
+
+    d.putNumChild(5)
+    if d.isExpanded():
+        with Children(d, 5):
+            d.putSubItem("point", point)
+            with SubItem(d, "method"):
+                d.putValue(simple_method)
+                d.putType(method.type)
+                d.putNumChild(0)
+            d.putSubItem("discarded", discarded)
+            d.putSubItem("selectable_start", selectable_start)
+            d.putSubItem("operations", operations)
