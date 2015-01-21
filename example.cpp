@@ -1,5 +1,8 @@
 #include <boost/array.hpp>
 
+#include <boost/container/static_vector.hpp>
+#include <boost/container/vector.hpp>
+
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/index/rtree.hpp>
@@ -64,6 +67,14 @@ int main()
     rtree.insert(point_t(4, 4));
 
     boost::array<int, 5> arr;
+
+    boost::container::static_vector<int, 5> svec(5, 0);
+    boost::container::vector<int> vec(5, 0);
+
+    for ( int i = 0 ; i < 5 ; ++i )
+    {
+        arr[i] = svec[i] = vec[i] = i;
+    }
 
     boost::rational<int> r1;
     boost::rational<int> r2(1);

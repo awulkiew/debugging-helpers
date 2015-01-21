@@ -6,6 +6,9 @@ Currently supported:
 
 * Boost.Array
   * boost::array
+* Boost.Container
+  * boost::container::static_vector
+  * boost::container::vector
 * Boost.Geometry
   * boost::geometry::detail::overlay::turn_info
   * boost::geometry::detail::overlay::turn_operation
