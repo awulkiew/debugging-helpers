@@ -44,9 +44,9 @@ def qdump__boost__geometry__model__d2__point_xy(d, value):
 
 def boost__geometry__point_dimension(d, point_type):
     point_str = str(point_type)
-    if point_str.startswith("boost::geometry::model::point") != -1:
+    if point_str.startswith("boost::geometry::model::point"):
         return int(d.numericTemplateArgument(point_type, 1))
-    elif point_str.startswith("boost::geometry::model::d2::point_xy") != -1:
+    elif point_str.startswith("boost::geometry::model::d2::point_xy"):
         return 2
     return 0
 
@@ -83,7 +83,7 @@ def boost__geometry__dump_derived_from_vector(d, value, container_tparam_id):
     Cont_str = str(value.type)
     if container_tparam_id >= 0:
         Cont_str = d.extractTemplateArgument(str(value.type), container_tparam_id)
-    if Cont_str.startswith("std::vector") != -1:
+    if Cont_str.startswith("std::vector"):
         qdump__std__vector(d, value)
     else:
         d.putPlainChildren(value)
@@ -194,8 +194,7 @@ def qdump__boost__geometry__detail__overlay__turn_operation(d, value):
     operation = value["operation"]
     seg_id = value["seg_id"]
     fraction = value["fraction"]
-    simple_op = str(operation)
-    simple_op = simple_op[simple_op.rfind("_")+1:]
+    simple_op = str(operation)[44:]
     d.putValue(simple_op)
     d.putNumChild(3)
     if d.isExpanded():
@@ -213,10 +212,9 @@ def qdump__boost__geometry__detail__overlay__turn_info(d, value):
     discarded = value["discarded"]
     selectable_start = value["selectable_start"]
     operations = value["operations"]
-    simple_method = str(method)
-    simple_method = simple_method[simple_method.rfind("_")+1:]
+    simple_method = str(method)[41:]
 
-    val_str = "%s" % simple_method;
+    val_str = simple_method
     dim = boost__geometry__point_dimension(d, point.type)
     if dim > 0:
         val_str += " " + boost__geometry__point_array_to_text(point["m_values"], dim)
