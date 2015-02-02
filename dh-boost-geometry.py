@@ -192,8 +192,6 @@ def qdump__boost__geometry__segment_identifier(d, value):
 
 def qdump__boost__geometry__detail__overlay__turn_operation(d, value):
     operation = value["operation"]
-    seg_id = value["seg_id"]
-    fraction = value["fraction"]
     simple_op = str(operation)[44:]
     d.putValue(simple_op)
     d.putNumChild(3)
@@ -203,8 +201,29 @@ def qdump__boost__geometry__detail__overlay__turn_operation(d, value):
                 d.putValue(simple_op)
                 d.putType(operation.type)
                 d.putNumChild(0)
-            d.putSubItem("seg_id", seg_id)
-            d.putSubItem("fraction", fraction)
+            d.putSubItem("seg_id", value["seg_id"])
+            d.putSubItem("fraction", value["fraction"])
+
+def qdump__boost__geometry__detail__overlay__turn_operation_linear(d, value):
+    operation = value["operation"]
+    simple_op = str(operation)[44:]
+    d.putValue(simple_op)
+    d.putNumChild(5)
+    if d.isExpanded():
+        with Children(d, 5):
+            with SubItem(d, "operation"):
+                d.putValue(simple_op)
+                d.putType(operation.type)
+                d.putNumChild(0)
+            d.putSubItem("seg_id", value["seg_id"])
+            d.putSubItem("fraction", value["fraction"])
+            d.putSubItem("is_collinear", value["is_collinear"])
+            with SubItem(d, "position"):
+                position = value["position"]
+                simple_pos = str(position)[43:]
+                d.putValue(simple_pos)
+                d.putType(position.type)
+                d.putNumChild(0)
 
 def qdump__boost__geometry__detail__overlay__turn_info(d, value):
     point = value["point"]
@@ -231,3 +250,19 @@ def qdump__boost__geometry__detail__overlay__turn_info(d, value):
             d.putSubItem("discarded", discarded)
             d.putSubItem("selectable_start", selectable_start)
             d.putSubItem("operations", operations)
+
+def qdump__boost__geometry__side_info(d, value):
+    sides = value["sides"]
+    side0 = sides[0]
+    side1 = sides[1]
+    side00 = side0["first"]
+    side01 = side0["second"]
+    side10 = side1["first"]
+    side11 = side1["second"]
+    d.putValue("{{%s, %s},{%s, %s}}" % (side00, side01, side10, side11))
+    d.putType(value.type)
+    d.putNumChild(2)
+    if d.isExpanded():
+        with Children(d, 2):
+            d.putSubItem("[0]", side0)
+            d.putSubItem("[1]", side1)
