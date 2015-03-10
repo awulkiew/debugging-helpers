@@ -227,19 +227,19 @@ def qdump__boost__geometry__detail__overlay__turn_operation_linear(d, value):
 
 def qdump__boost__geometry__detail__overlay__turn_info(d, value):
     point = value["point"]
-    method = value["method"]
-    discarded = value["discarded"]
-    selectable_start = value["selectable_start"]
     operations = value["operations"]
+    method = value["method"]
     simple_method = str(method)[41:]
-    simple_op0 = str(operations["elems"][0]["operation"])[44:]
-    simple_op1 = str(operations["elems"][1]["operation"])[44:]
+    op0 = operations["elems"][0];
+    op1 = operations["elems"][1];
+    simple_op0 = str(op0["operation"])[44:]
+    simple_op1 = str(op1["operation"])[44:]
     simple_operations = simple_op0 + ", " + simple_op1;
 
-    val_str = simple_method
+    val_str = simple_method + " (" + simple_operations + ")"
     dim = boost__geometry__point_dimension(d, point.type)
     if dim > 0:
-        val_str += " (" + simple_operations + ") " + boost__geometry__point_array_to_text(point["m_values"], dim)
+        val_str += " " + boost__geometry__point_array_to_text(point["m_values"], dim)
     d.putValue(val_str)
 
     d.putNumChild(5)
@@ -250,16 +250,16 @@ def qdump__boost__geometry__detail__overlay__turn_info(d, value):
                 d.putValue(simple_method)
                 d.putType(method.type)
                 d.putNumChild(0)
-            d.putSubItem("discarded", discarded)
-            d.putSubItem("selectable_start", selectable_start)
+            d.putSubItem("discarded", value["discarded"])
+            d.putSubItem("selectable_start", value["selectable_start"])
             with SubItem(d, "operations"):
                 d.putValue(simple_operations)
                 d.putType(operations.type)
                 d.putNumChild(2)
                 if d.isExpanded():
                     with Children(d, 2):
-                        d.putSubItem("[0]", operations["elems"][0])
-                        d.putSubItem("[1]", operations["elems"][1])
+                        d.putSubItem("[0]", op0)
+                        d.putSubItem("[1]", op1)
 
 def qdump__boost__geometry__side_info(d, value):
     sides = value["sides"]
