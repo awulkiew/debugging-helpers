@@ -49,3 +49,5 @@ if GDB was linked against python 3 or
 if GDB was linked against python 2.
 
 Additional information: http://doc.qt.io/qtcreator/creator-debugging-helpers.html
+
+Developed for QtCreator 3, may not work with newer versions.
