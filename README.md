@@ -40,14 +40,19 @@ Currently supported:
 
 To use, in **~/.gdbinit** or **QtCreator > Tools > Options > Debugger > GDB > Additional Startup Commands** put
 
-    python exec(open('path_to_filename.py').read())
+```sh
+python exec(open('path_to_filename.py').read())
+```
 
 if GDB was linked against python 3 or
 
-    python execfile('path_to_filename.py')
+```sh
+python execfile('path_to_filename.py')
+```
 
 if GDB was linked against python 2.
 
 Additional information: http://doc.qt.io/qtcreator/creator-debugging-helpers.html
 
-Developed for QtCreator 3, may not work with newer versions.
+Originally Developed for [QtCreator 3](QtCreator3), and may not work with newer versions.
+Some of the Debugging Helpers are explicitly ported to [QtCreator 4](QtCreator4).
