@@ -53,10 +53,6 @@ int main()
 
     bg::segment_identifier seg_id(0, -1, 0, 1);
 
-    bg::detail::overlay::turn_operation< bg::segment_ratio<int> > turn_op;
-    bg::detail::overlay::turn_info<
-        point_t, bg::segment_ratio<int> > turn_inf;
-
     bgi::detail::varray<point_t, 10> varray(5, point);
 
     bgi::rtree<point_t, bgi::linear<4, 2> > rtree;
