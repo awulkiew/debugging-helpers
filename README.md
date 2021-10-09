@@ -13,6 +13,7 @@ Currently supported:
   * boost::geometry::index::rtree
   * boost::geometry::model::box
   * boost::geometry::model::d2::point_xy
+  * boost::geometry::model::d3::point_xyz
   * boost::geometry::model::linestring
   * boost::geometry::model::multi_point
   * boost::geometry::model::multi_linestring
