@@ -19,4 +19,4 @@ def qdump__boost__variant(d, value):
     if d.isExpanded():
         storage = value["storage_"]["data_"]["buf"]
         with Children(d, 1):
-            d.putSubItem("value", storage.cast(type.pointer()).dereference())
+            d.putSubItem("value", storage.cast(type))
