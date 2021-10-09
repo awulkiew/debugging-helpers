@@ -2,6 +2,10 @@
 
 ![example](example.png)
 
+To use, specify the location of custom helpers in **Tools > Options > Debugger > Locals & Expressions > Extra Debugging Helpers**
+
+Additional information: https://doc.qt.io/qtcreator/creator-debugging-helpers.html
+
 Currently supported:
 
 * Boost.Array
@@ -14,6 +18,7 @@ Currently supported:
   * boost::geometry::model::box
   * boost::geometry::model::d2::point_xy
   * boost::geometry::model::d3::point_xyz
+  * boost::geometry::model::geometry_collection
   * boost::geometry::model::linestring
   * boost::geometry::model::multi_point
   * boost::geometry::model::multi_linestring
@@ -31,10 +36,5 @@ Currently supported:
   * boost::tuple
 * Boost.Variant
   * boost::variant
-
-To use, specify the location of custom helpers in **Tools > Options > Debugger > Locals & Expressions > Extra Debugging Helpers**
-
-Additional information: https://doc.qt.io/qtcreator/creator-debugging-helpers.html
-
-Originally Developed for [QtCreator 3](QtCreator3), and may not work with newer versions.
-Some of the Debugging Helpers are explicitly ported to [QtCreator 4](QtCreator4).
+* Boost.Variant2
+  * boost::variant2::variant

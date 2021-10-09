@@ -13,6 +13,7 @@
 #include <boost/tuple/tuple.hpp>
 
 #include <boost/variant.hpp>
+#include <boost/variant2/variant.hpp>
 
 int main()
 {
@@ -29,6 +30,9 @@ int main()
 
     typedef boost::tuple<point_t, box_t, linestring_t> tuple_t;
     typedef boost::variant<point_t, box_t, linestring_t> variant_t;
+    typedef boost::variant2::variant<point_t, box_t, linestring_t> variant2_t;
+
+    typedef bg::model::geometry_collection<variant_t> geometry_collection_t;
 
     point_t point;
     box_t box;
@@ -37,6 +41,7 @@ int main()
     ring_t ring;
     polygon_t polygon;
     mpolygon_t mpolygon;
+    geometry_collection_t gcollection;
 
     bg::read_wkt("POINT(0 0)", point);
     bg::read_wkt("BOX(0 0, 1 1)", box);
@@ -45,6 +50,7 @@ int main()
     bg::read_wkt("POLYGON((0 0,0 5,5 0,0 0))", ring);
     bg::read_wkt("POLYGON((0 0,0 5,5 0,0 0),(1 1,2 1,1 2,1 1),(3 3,4 3,3 4,3 3))", polygon);
     bg::read_wkt("MULTIPOLYGON(((0 0,0 1,1 0,0 0)),((4 4,4 5,5 4,4 4)))", mpolygon);
+    bg::read_wkt("GEOMETRYCOLLECTION(POINT(0 0), BOX(0 0, 1 1), LINESTRING(0 0, 1 1, 2 2))", gcollection);
 
     bg::model::referring_segment<point_t> ref_segment(point, point);
 
@@ -78,9 +84,15 @@ int main()
 
     tuple_t tuple = boost::make_tuple(point, box, linestring);
 
+    variant_t variant_;
     variant_t variant0 = point;
     variant_t variant1 = box;
     variant_t variant2 = linestring;
+
+    variant2_t variant2_;
+    variant2_t variant20 = point;
+    variant2_t variant21 = box;
+    variant2_t variant22 = linestring;
 
     return 0;
 }

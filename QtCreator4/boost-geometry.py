@@ -97,6 +97,9 @@ def qdump__boost__geometry__model__multi_linestring(d, value):
 def qdump__boost__geometry__model__multi_polygon(d, value):
     boost__geometry__model__container(d, value)
 
+def qdump__boost__geometry__model__geometry_collection(d, value):
+    boost__geometry__model__container(d, value)
+
 
 def qdump__boost__geometry__model__polygon(d, value):
     d.putNumChild(2)
