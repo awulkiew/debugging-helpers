@@ -8,6 +8,8 @@
 #include <boost/geometry/index/rtree.hpp>
 #include <boost/geometry/io/wkt/wkt.hpp>
 
+#include <boost/qvm/all.hpp>
+
 #include <boost/ratio.hpp>
 
 #include <boost/tuple/tuple.hpp>
@@ -77,6 +79,10 @@ int main()
     {
         arr[i] = svec[i] = vec[i] = i;
     }
+
+    boost::qvm::mat<float, 3, 3> qvm_m = boost::qvm::rotx_mat<3>(3.14159f);
+    boost::qvm::quat<float> qvm_q = boost::qvm::rotx_quat(3.14159f);
+    boost::qvm::vec<float, 3> qvm_v = {0, 0, 7};
 
     boost::rational<int> r1;
     boost::rational<int> r2(1);

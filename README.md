@@ -30,6 +30,10 @@ Currently supported:
   * boost::geometry::model::segment
   * boost::geometry::segment_identifier
   * boost::geometry::segment_ratio
+* Boost.QVM
+  * boost::qvm::mat
+  * boost::qvm::quat
+  * boost::qvm::vec
 * Boost.Rational
   * boost::rational
 * Boost.Tuple

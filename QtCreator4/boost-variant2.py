@@ -1,4 +1,4 @@
-# Boost.Variant debugging helpers
+# Boost.Variant2 debugging helpers
 
 # Copyright (c) 2021 Adam Wulkiewicz, Lodz, Poland.
 

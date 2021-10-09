@@ -10,7 +10,7 @@
 # geometries
 #################################################################
 
-from dumper import Children, SubItem
+from dumper import Children
 
 def boost__geometry__point_array_to_text(array, size):
     res = '{'
