@@ -38,21 +38,9 @@ Currently supported:
 * Boost.Variant
   * boost::variant
 
-To use, in **~/.gdbinit** or **QtCreator > Tools > Options > Debugger > GDB > Additional Startup Commands** put
+To use, specify the location of custom helpers in **Tools > Options > Debugger > Locals & Expressions > Extra Debugging Helpers**
 
-```sh
-python exec(open('path_to_filename.py').read())
-```
-
-if GDB was linked against python 3 or
-
-```sh
-python execfile('path_to_filename.py')
-```
-
-if GDB was linked against python 2.
-
-Additional information: http://doc.qt.io/qtcreator/creator-debugging-helpers.html
+Additional information: https://doc.qt.io/qtcreator/creator-debugging-helpers.html
 
 Originally Developed for [QtCreator 3](QtCreator3), and may not work with newer versions.
 Some of the Debugging Helpers are explicitly ported to [QtCreator 4](QtCreator4).
