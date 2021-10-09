@@ -8,6 +8,9 @@
 #include <boost/geometry/index/rtree.hpp>
 #include <boost/geometry/io/wkt/wkt.hpp>
 
+#include <boost/math/octonion.hpp>
+#include <boost/math/quaternion.hpp>
+
 #include <boost/qvm/all.hpp>
 
 #include <boost/ratio.hpp>
@@ -79,6 +82,9 @@ int main()
     {
         arr[i] = svec[i] = vec[i] = i;
     }
+
+    boost::math::octonion<float> math_o{1, 2, 3, 4, 5, 6, 7, 8};
+    boost::math::quaternion<float> math_q{1, 2, 3, 4};
 
     boost::qvm::mat<float, 3, 3> qvm_m = boost::qvm::rotx_mat<3>(3.14159f);
     boost::qvm::quat<float> qvm_q = boost::qvm::rotx_quat(3.14159f);
