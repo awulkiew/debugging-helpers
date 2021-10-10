@@ -10,24 +10,12 @@
 # geometries
 #################################################################
 
+from awulkiew import array_to_str
 from dumper import Children
-
-def boost__geometry__point_array_to_text(array, size):
-    res = '{'
-    if size > 0:
-        res += array[0].display()
-    if size > 1:
-        res += ", " + array[1].display()
-    if size > 2:
-        res += ", " + array[2].display()
-    if size > 3:
-        res += ", ..."
-    res += '}'
-    return res
 
 def boost__geometry__model__point(d, value, size):
     array = value["m_values"]
-    d.putValue(boost__geometry__point_array_to_text(array, size))
+    d.putValue(array_to_str(array, size, 3))
     d.putNumChild(size)
     if d.isExpanded():
         with Children(d, size):
@@ -59,8 +47,8 @@ def boost__geometry__model_indexed(d, value, i0, i1, n0, n1):
     if dim > 0:
         array0 = i0["m_values"]
         array1 = i1["m_values"]
-        val = '{' + boost__geometry__point_array_to_text(array0, dim) + ", "
-        val +=      boost__geometry__point_array_to_text(array1, dim) + '}'
+        val = '{' + array_to_str(array0, dim, 3) + ", "
+        val +=      array_to_str(array1, dim, 3) + '}'
         d.putValue(val)
     d.putNumChild(2)
     if d.isExpanded():
@@ -102,13 +90,14 @@ def qdump__boost__geometry__model__geometry_collection(d, value):
 
 
 def qdump__boost__geometry__model__polygon(d, value):
+    outer = value["m_outer"]
     d.putNumChild(2)
     if d.isExpanded():
+        inners = value["m_inners"]
         with Children(d, 2):
-            outer = value["m_outer"]
-            inners = value["m_inners"]
-            d.putSubItem("exterior", outer)
-            d.putSubItem("interior", inners)
+            d.putSubItem("outer", outer)
+            d.putSubItem("inners", inners)
+    d.putItem(outer) # Only for putValue, children are set before
 
 #################################################################
 # index

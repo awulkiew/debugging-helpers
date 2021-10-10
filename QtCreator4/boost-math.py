@@ -6,6 +6,7 @@
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
+from awulkiew import array_to_str
 from dumper import Children
 
 def qdump__boost__math__octonion(d, value):
@@ -13,7 +14,7 @@ def qdump__boost__math__octonion(d, value):
     bb = value["b"]
     cc = value["c"]
     dd = value["d"]
-    d.putValue('{' + aa.display() + ", " + bb.display() + ", " + cc.display() + ", " + dd.display() + ", ...}")
+    d.putValue(array_to_str([aa, bb, cc, dd, 0], 5, 4)) # 0 is dummy value
     d.putNumChild(8)
     if d.isExpanded():
         with Children(d, 8):
@@ -31,7 +32,7 @@ def qdump__boost__math__quaternion(d, value):
     bb = value["b"]
     cc = value["c"]
     dd = value["d"]
-    d.putValue('{' + aa.display() + ", " + bb.display() + ", " + cc.display() + ", " + dd.display() + '}')
+    d.putValue(array_to_str([aa, bb, cc, dd], 4, 4))
     d.putNumChild(4)
     if d.isExpanded():
         with Children(d, 4):

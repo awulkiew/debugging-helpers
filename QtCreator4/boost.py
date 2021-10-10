@@ -53,24 +53,12 @@ def qdump__boost__container__static_vector(d, value):
 # geometries
 #################################################################
 
+from awulkiew import array_to_str
 from dumper import Children
-
-def boost__geometry__point_array_to_text(array, size):
-    res = '{'
-    if size > 0:
-        res += array[0].display()
-    if size > 1:
-        res += ", " + array[1].display()
-    if size > 2:
-        res += ", " + array[2].display()
-    if size > 3:
-        res += ", ..."
-    res += '}'
-    return res
 
 def boost__geometry__model__point(d, value, size):
     array = value["m_values"]
-    d.putValue(boost__geometry__point_array_to_text(array, size))
+    d.putValue(array_to_str(array, size, 3))
     d.putNumChild(size)
     if d.isExpanded():
         with Children(d, size):
@@ -102,8 +90,8 @@ def boost__geometry__model_indexed(d, value, i0, i1, n0, n1):
     if dim > 0:
         array0 = i0["m_values"]
         array1 = i1["m_values"]
-        val = '{' + boost__geometry__point_array_to_text(array0, dim) + ", "
-        val +=      boost__geometry__point_array_to_text(array1, dim) + '}'
+        val = '{' + array_to_str(array0, dim, 3) + ", "
+        val +=      array_to_str(array1, dim, 3) + '}'
         d.putValue(val)
     d.putNumChild(2)
     if d.isExpanded():
@@ -145,13 +133,14 @@ def qdump__boost__geometry__model__geometry_collection(d, value):
 
 
 def qdump__boost__geometry__model__polygon(d, value):
+    outer = value["m_outer"]
     d.putNumChild(2)
     if d.isExpanded():
+        inners = value["m_inners"]
         with Children(d, 2):
-            outer = value["m_outer"]
-            inners = value["m_inners"]
-            d.putSubItem("exterior", outer)
-            d.putSubItem("interior", inners)
+            d.putSubItem("outer", outer)
+            d.putSubItem("inners", inners)
+    d.putItem(outer) # Only for putValue, children are set before
 
 #################################################################
 # index
@@ -231,6 +220,7 @@ def qdump__boost__geometry__segment_identifier(d, value):
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
+from awulkiew import array_to_str
 from dumper import Children
 
 def qdump__boost__math__octonion(d, value):
@@ -238,7 +228,7 @@ def qdump__boost__math__octonion(d, value):
     bb = value["b"]
     cc = value["c"]
     dd = value["d"]
-    d.putValue('{' + aa.display() + ", " + bb.display() + ", " + cc.display() + ", " + dd.display() + ", ...}")
+    d.putValue(array_to_str([aa, bb, cc, dd, 0], 5, 4)) # 0 is dummy value
     d.putNumChild(8)
     if d.isExpanded():
         with Children(d, 8):
@@ -256,7 +246,7 @@ def qdump__boost__math__quaternion(d, value):
     bb = value["b"]
     cc = value["c"]
     dd = value["d"]
-    d.putValue('{' + aa.display() + ", " + bb.display() + ", " + cc.display() + ", " + dd.display() + '}')
+    d.putValue(array_to_str([aa, bb, cc, dd], 4, 4))
     d.putNumChild(4)
     if d.isExpanded():
         with Children(d, 4):
@@ -272,20 +262,8 @@ def qdump__boost__math__quaternion(d, value):
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
+from awulkiew import array_to_str
 from dumper import Children, SubItem
-
-def boost__qvm__vec_array_to_text(array, size):
-    res = '{'
-    if size > 0:
-        res += array[0].display()
-    if size > 1:
-        res += ", " + array[1].display()
-    if size > 2:
-        res += ", " + array[2].display()
-    if size > 3:
-        res += ", ..."
-    res += '}'
-    return res
 
 def qdump__boost__qvm__mat(d, value):
     array = value["a"]
@@ -297,11 +275,11 @@ def qdump__boost__qvm__mat(d, value):
             for r in range(0, rows):
                 with SubItem(d, "[%s]" % r):
                     d.putItem(array[r])
-                    d.putValue(boost__qvm__vec_array_to_text(array[r], cols))
+                    d.putValue(array_to_str(array[r], cols, 4))
 
 def qdump__boost__qvm__quat(d, value):
     array = value["a"]
-    d.putValue('{' + array[0].display() + ", " + array[1].display() + ", " + array[2].display() + ", " + array[3].display() + '}')
+    d.putValue(array_to_str(array, 4, 4))
     d.putNumChild(4)
     if d.isExpanded():
         d.putArrayData(array.address(), 4, value.type[0])
@@ -309,7 +287,7 @@ def qdump__boost__qvm__quat(d, value):
 def qdump__boost__qvm__vec(d, value):
     array = value["a"]
     size = int(value.type[1])
-    d.putValue(boost__qvm__vec_array_to_text(array, size))
+    d.putValue(array_to_str(array, size, 4))
     d.putNumChild(size)
     if d.isExpanded():
         d.putArrayData(array.address(), size, value.type[0])
@@ -334,7 +312,7 @@ def qdump__boost__rational(d, value):
         d.putValue(0)
     else:
         f = float(int(num)) / float(int(den))
-        d.putValue("%s/%s (%s)" % (num, den, f))
+        d.putValue("%s/%s ~ %s" % (num, den, f))
     d.putNumChild(2)
     if d.isExpanded():
         with Children(d, 2):
@@ -392,19 +370,19 @@ def qdump__boost__variant2__variant(d, value):
     ix = int(value["ix_"].integer())
     if ix < 0:
         return # TODO: handle double-buffered
-    count = len(value.type.templateArguments())
-    v = "<none>"
-    if (ix > 0):
+    if ix > 0:
         which = ix - 1
         type = value.type[which]
         type_name = str(type.unqualified())
         type_name = type_name[:type_name.find('<')]
         type_name = type_name[type_name.rfind("::")+2:]
-        v = "<%s:%s>" % (which, type_name)
-    d.putValue(v)
+        d.putValue("<%s:%s>" % (which, type_name))
+    else:
+        d.putValue("<none>")
     d.putNumChild(1)
     if d.isExpanded():
         with Children(d, 1):
+            count = len(value.type.templateArguments())
             boost__variant2__variant_put(d, value, value["st1_"], 0, ix, count)
 # Boost.Variant debugging helpers
 

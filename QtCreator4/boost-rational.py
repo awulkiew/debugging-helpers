@@ -19,7 +19,7 @@ def qdump__boost__rational(d, value):
         d.putValue(0)
     else:
         f = float(int(num)) / float(int(den))
-        d.putValue("%s/%s (%s)" % (num, den, f))
+        d.putValue("%s/%s ~ %s" % (num, den, f))
     d.putNumChild(2)
     if d.isExpanded():
         with Children(d, 2):

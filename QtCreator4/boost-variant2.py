@@ -20,17 +20,17 @@ def qdump__boost__variant2__variant(d, value):
     ix = int(value["ix_"].integer())
     if ix < 0:
         return # TODO: handle double-buffered
-    count = len(value.type.templateArguments())
-    v = "<none>"
-    if (ix > 0):
+    if ix > 0:
         which = ix - 1
         type = value.type[which]
         type_name = str(type.unqualified())
         type_name = type_name[:type_name.find('<')]
         type_name = type_name[type_name.rfind("::")+2:]
-        v = "<%s:%s>" % (which, type_name)
-    d.putValue(v)
+        d.putValue("<%s:%s>" % (which, type_name))
+    else:
+        d.putValue("<none>")
     d.putNumChild(1)
     if d.isExpanded():
         with Children(d, 1):
+            count = len(value.type.templateArguments())
             boost__variant2__variant_put(d, value, value["st1_"], 0, ix, count)
