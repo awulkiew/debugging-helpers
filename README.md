@@ -6,7 +6,7 @@ To use, specify the location of custom helpers in **Tools > Options > Debugger >
 
 Additional information: https://doc.qt.io/qtcreator/creator-debugging-helpers.html
 
-Currently supported:
+### Currently supported:
 
 * Boost.Array
   * boost::array
