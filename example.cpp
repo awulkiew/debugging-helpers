@@ -63,6 +63,10 @@ int main()
     bg::segment_ratio<int> sratio2(5, 6);
 
     bg::segment_identifier seg_id(0, -1, 0, 1);
+    bg::ring_identifier ring_id(0, -1, 0);
+
+    bg::srs::sphere<double> sphere;
+    bg::srs::spheroid<double> spheroid;
 
     bgi::detail::varray<point_t, 10> varray(5, point);
 

@@ -28,8 +28,11 @@ Additional information: https://doc.qt.io/qtcreator/creator-debugging-helpers.ht
   * boost::geometry::model::referring_segment
   * boost::geometry::model::ring
   * boost::geometry::model::segment
+  * boost::geometry::ring_identifier
   * boost::geometry::segment_identifier
   * boost::geometry::segment_ratio
+  * boost::geometry::srs::sphere
+  * boost::geometry::srs::spheroid
 * Boost.Math
   * boost::math::octonion
   * boost::math::quaternion

@@ -153,19 +153,50 @@ def qdump__boost__geometry__segment_ratio(d, value):
 # algorithms
 #################################################################
 
-def boost__geometry__segment_identifier_to_str(value):
-    source_index = value["source_index"].display()
-    multi_index = value["multi_index"].display()
-    ring_index = value["ring_index"].display()
-    segment_index = value["segment_index"].display()
-    return "{%s, %s, %s, %s}" % (source_index, multi_index, ring_index, segment_index)
-
 def qdump__boost__geometry__segment_identifier(d, value):
-    d.putValue(boost__geometry__segment_identifier_to_str(value))
+    so = value["source_index"]
+    mu = value["multi_index"]
+    ri = value["ring_index"]
+    se = value["segment_index"]
+    d.putValue(array_to_str([so, mu, ri, se], 4, 4))
     d.putNumChild(4)
     if d.isExpanded():
         with Children(d, 4):
-            d.putSubItem("source_index", value["source_index"])
-            d.putSubItem("multi_index", value["multi_index"])
-            d.putSubItem("ring_index", value["ring_index"])
-            d.putSubItem("segment_index", value["segment_index"])
+            d.putSubItem("source_index", so)
+            d.putSubItem("multi_index", mu)
+            d.putSubItem("ring_index", ri)
+            d.putSubItem("segment_index", se)
+
+def qdump__boost__geometry__ring_identifier(d, value):
+    so = value["source_index"]
+    mu = value["multi_index"]
+    ri = value["ring_index"]
+    d.putValue(array_to_str([so, mu, ri], 3, 3))
+    d.putNumChild(3)
+    if d.isExpanded():
+        with Children(d, 3):
+            d.putSubItem("source_index", so)
+            d.putSubItem("multi_index", mu)
+            d.putSubItem("ring_index", ri)
+
+#################################################################
+# srs
+#################################################################
+
+def qdump__boost__geometry__srs__sphere(d, value):
+    r = value["m_r"]
+    d.putValue(array_to_str([r], 1, 1))
+    d.putNumChild(1)
+    if d.isExpanded():
+        with Children(d, 1):
+            d.putSubItem("radius", r)
+
+def qdump__boost__geometry__srs__spheroid(d, value):
+    a = value["m_a"]
+    b = value["m_b"]
+    d.putValue(array_to_str([a, b], 2, 2))
+    d.putNumChild(2)
+    if d.isExpanded():
+        with Children(d, 2):
+            d.putSubItem("a", a)
+            d.putSubItem("b", b)
